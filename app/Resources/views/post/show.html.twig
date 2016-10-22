@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+    <div id="wrapper">
+        <div id="container">
+            <div class="post">
+                <h2 class="post-title">{{ post.getTitle() }}</h2>
+                <p class="post-meta text-muted">{{ post.getCreatedTime()|date("Y-m-d H:i:s") }} by <a href="#">{{ post.getUser() }}</a></p>
+                {{ post.getContent() }}
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

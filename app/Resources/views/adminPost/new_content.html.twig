@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+
+<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+<div class="form-group">
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_errors(form.title) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.content) }}
+    {{ form_widget(form.content, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_errors(form.content) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.is_published) }}
+    {{ form_widget(form.is_published, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_errors(form.is_published) }}
+</div>
+
+<button type="submit" class="btn btn-primary">Create Post</button>
+
+{{ form_end(form) }}
+
+

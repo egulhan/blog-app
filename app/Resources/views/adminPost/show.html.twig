@@ -1,0 +1,67 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <a href="{{ path('admin_post_list') }}" class="btn btn-default">List Posts</a>
+        <a href="{{ path('admin_post_update', {'id': post.getId()}) }}" class="btn btn-primary">Update</a>
+        <a href="{{ path('admin_post_delete', {'id': post.getId()}) }}" class="btn btn-danger delete-btn">Delete</a>
+    </div>
+    <div class="row" style="margin-top: 15px;">
+        <table class="table table-bordered">
+            <tr>
+                <td>ID</td>
+                <td>{{ post.getId() }}</td>
+            </tr>
+            <tr>
+                <td>Is Published</td>
+                <td>{{ post.getIsPublished() == 0 ? 'No' : 'Yes' }}</td>
+            </tr>
+            <tr>
+                <td>SEO URL</td>
+                <td>{{ post.getSeoUrl() }}</td>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td>{{ post.getUser() }}</td>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td>{{ post.getTitle() }}</td>
+            </tr>
+            <tr>
+                <td>Content</td>
+                <td>{{ post.getContent() }}</td>
+            </tr>
+            <tr>
+                <td>Created Time</td>
+                <td>{{ post.getCreatedTime()|date("Y-m-d H:i:s") }}</td>
+            </tr>
+            <tr>
+                <td>Update Time</td>
+                <td>{{ post.getUpdateTime()|date("Y-m-d H:i:s") }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            $('.delete-btn').click(function () {
+                var listUrl='{{ path('admin_post_list') }}';
+
+                if(confirm('Are you sure want to delete?'))
+                {
+                    $.post($(this).attr('href'),null,function(data){
+                        data=$.parseJSON(data);
+
+                        if(data.result)
+                        {
+                            location.href=listUrl;
+                        }
+                    });
+                }
+
+                return false;
+            });
+        });
+    </script>
+{% endblock content %}

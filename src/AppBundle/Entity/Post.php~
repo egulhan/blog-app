@@ -1,0 +1,224 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Post
+ *
+ * @ORM\Table(name="posts", indexes={@ORM\Index(name="ix_user_id", columns={"user_id"}), @ORM\Index(name="ix_is_published", columns={"is_published"}), @ORM\Index(name="ix_created_time", columns={"created_time"}), @ORM\Index(name="ix_update_time", columns={"update_time"})})
+ * @ORM\Entity
+ */
+class Post
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=200, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text", length=16777215, nullable=false)
+     */
+    private $content;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="is_published", type="integer", nullable=false)
+     */
+    private $isPublished = '0';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_time", type="datetime", nullable=false)
+     */
+    private $createdTime = '0000-00-00 00:00:00';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_time", type="datetime", nullable=false)
+     */
+    private $updateTime = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \FosUser
+     *
+     * @ORM\ManyToOne(targetEntity="FosUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Post
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Post
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set isPublished
+     *
+     * @param integer $isPublished
+     *
+     * @return Post
+     */
+    public function setIsPublished($isPublished)
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublished
+     *
+     * @return integer
+     */
+    public function getIsPublished()
+    {
+        return $this->isPublished;
+    }
+
+    /**
+     * Set createdTime
+     *
+     * @param \DateTime $createdTime
+     *
+     * @return Post
+     */
+    public function setCreatedTime($createdTime)
+    {
+        $this->createdTime = $createdTime;
+
+        return $this;
+    }
+
+    /**
+     * Get createdTime
+     *
+     * @return \DateTime
+     */
+    public function getCreatedTime()
+    {
+        return $this->createdTime;
+    }
+
+    /**
+     * Set updateTime
+     *
+     * @param \DateTime $updateTime
+     *
+     * @return Post
+     */
+    public function setUpdateTime($updateTime)
+    {
+        $this->updateTime = $updateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get updateTime
+     *
+     * @return \DateTime
+     */
+    public function getUpdateTime()
+    {
+        return $this->updateTime;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\FosUser $user
+     *
+     * @return Post
+     */
+    public function setUser(\AppBundle\Entity\FosUser $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\FosUser
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+}

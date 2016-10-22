@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <a href="{{ path('admin_post_list') }}" class="btn btn-default">List Posts</a>
+        <a href="{{ path('admin_post_new') }}" class="btn btn-default">Create Post</a>
+    </div>
+    <div class="row" style="margin-top: 15px;">
+        {% if posts %}
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Is Published</th>
+                    <th>User</th>
+                    <th>Title</th>
+                    <th>Created Time</th>
+                    <th>Update Time</th>
+                    <th>&nbsp;</th>
+                </tr>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{ post.getId() }}</td>
+                        <td>{{ post.getIsPublished() == 0 ? 'No' : 'Yes' }}</td>
+                        <td>{{ post.getUser() }}</td>
+                        <td>{{ post.getTitle() }}</td>
+                        <td>{{ post.getCreatedTime()|date("Y-m-d H:i:s") }}</td>
+                        <td>{{ post.getUpdateTime()|date("Y-m-d H:i:s") }}</td>
+                        <td>
+                            <a class="view-btn" href="{{ path('admin_post_show', {'id': post.getId()}) }}" title="View"><i class="glyphicon glyphicon-eye-open"></i></a>
+                            <a class="update-btn" href="{{ path('admin_post_update', {'id': post.getId()}) }}" title="Update"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a class="delete-btn" href="{{ path('admin_post_delete', {'id': post.getId()}) }}" title="Delete"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div class="alert alert-warning">No posts found</div>
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            $('.delete-btn').click(function () {
+                if(confirm('Are you sure want to delete?'))
+                {
+                    $.post($(this).attr('href'),null,function(data){
+                        data=$.parseJSON(data);
+
+                        if(data.result)
+                        {
+                            location.reload(true);
+                        }
+                    });
+                }
+
+                return false;
+            });
+        });
+    </script>
+{% endblock content %}
